@@ -1,0 +1,357 @@
+<link rel="StyleSheet"  href="ASCIIMathML.js" type="text/javascript"/>
+<script type="text/javascript" src="ASCIIMathML.js"></script>
+<script type="text/javascript">
+function CreateHTML(){
+var fso = new ActiveXObject("Scripting.FileSystemObject");
+var f1 = fso.createtextfile(s,true);
+var f2 = fso.createtextfile(s1,true);
+var f4 = fso.createtextfile(s2,true);
+f1.write(document.getElementById("inputText").value);
+f1.Close(); 
+f2.Close(); 
+f4.Close(); 
+var f3 = fso.GetFile("e:\\wamp\\www\\bitlisan2\\bitlisan\\kechengmuban.php");
+f3.Copy(s1);
+
+
+}
+
+
+translateOnLoad=false;
+function display() {
+  if (AMnames.length==0) initSymbols(); 
+  var str = document.getElementById("inputText").value;
+  var outnode = document.getElementById("outputNode");
+  outnode.innerHTML="";
+  var newp=document.createElement("p");
+    newp.innerText=str;
+    outnode.appendChild(newp);
+  AMprocessNode(outnode);
+
+}
+function insert(s) {
+			var obj = document.getElementById("inputText");
+			if(document.selection) { 
+			obj.focus(); 
+			var sel=document.selection.createRange(); 
+			document.selection.empty(); 
+			sel.text = s; 
+		} else { 
+			var prefix, main, suffix; 
+			prefix = obj.value.substring(0, obj.selectionStart); 
+			main = obj.value.substring(obj.selectionStart, obj.selectionEnd); 
+			suffix = obj.value.substring(obj.selectionEnd); 
+			obj.value = prefix + s + suffix; 
+}
+obj.focus(); 
+display();
+	}
+	function centre(){
+		document.getElementById("inputText").style.textAlign="center";
+
+	}
+	var listnum=0;
+  var menu_height;
+  var menu_width;
+  var menu_left;
+  var menu_top;
+  var topMar = 1;
+  var leftMar = -2;
+  var space = 1;
+  var isvisible;
+  
+function listbox(listname,buttonname,valuename)
+  {//
+  this.listname=listname
+  this.buttonname=buttonname
+  this.valuename=valuename
+  }
+function listaction(obj,action,showlist,scroll,tw)
+  {
+  num=obj.id.charAt(obj.id.length-1)
+  if (!scroll) {scroll=0}
+  if (!tw) {tw=105}
+  listbox=eval(lb[num].listname)
+  listbutton=eval(lb[num].buttonname)
+  listvalue=eval(lb[num].valuename)
+  switch (action)
+  {
+  case 0:
+  listbox.className="getlist";listbutton.className="listover"
+  break;
+  case 1:
+  if (listbox.gf=="0")
+  {listbox.className="lostlist";listbutton.className="menubar"}
+  break;
+  case 2:
+  for (i=0;i<lb.length;i++)
+  {
+  if (num!=i.toString()){
+  nlistbox=eval(lb[i].listname)
+  nlistbutton=eval(lb[i].buttonname)
+  nlistvalue=eval(lb[i].valuename)
+  nlistbox.className="lostlist";nlistbutton.className="menubar"
+  nlistbox.gf="0"
+  }
+  }
+  ShowMenu(listbox,showlist,tw,scroll);listbox.className="getlist";listbox.gf="1"
+  listnum=num;
+  break;
+  }
+  }
+function HideMenu()
+  {
+  var mX;
+  var mY;
+  var vDiv;
+  var mDiv;
+  if (isvisible == true)
+  {
+  vDiv = document.all("listDiv");
+  mX = window.event.clientX + document.body.scrollLeft;
+  mY = window.event.clientY + document.body.scrollTop;
+  if ((mX < parseInt(vDiv.style.left)) || (mX > parseInt(vDiv.style.left)+vDiv.offsetWidth) ||
+  (mY < parseInt(vDiv.style.top)-menu_height) || (mY > parseInt(vDiv.style.top)+vDiv.offsetHeight)) {
+  vDiv.style.visibility = "hidden";
+  isvisible = false;
+  }
+  }
+  if (isvisible==false)
+  {
+  for (i=0;i<lb.length;i++)
+  {
+  listbox=eval(lb[i].listname)
+  listbutton=eval(lb[i].buttonname)
+  listvalue=eval(lb[i].valuename)
+  listbox.className="lostlist";listbutton.className="menubar"
+  listbox.gf="0"
+  }
+  }
+  }
+function ShowMenu(obj,vMnuCode,tWidth,scroll) {
+  vMnuCode = "<table id='submenu' cellspacing=0 cellpadding=0 bgcolor=#ffffff border=0 style='width:"+tWidth +";border-collapse: collapse' class='listDiv'><tr height=23><td nowrap align=left>" +
+  vMnuCode + "</td></tr></table>";
+  menu_height = obj.offsetHeight;
+  menu_width = obj.offsetWidth;
+  menu_left = obj.offsetLeft + leftMar+2;
+  menu_top = obj.offsetTop + topMar + menu_height + space-3;
+  vParent = obj.offsetParent;
+  while (vParent.tagName.toUpperCase() != "BODY")
+  {
+  menu_left += vParent.offsetLeft;
+  menu_top += vParent.offsetTop;
+  vParent = vParent.offsetParent;
+  }
+  listDiv.innerHTML = vMnuCode;
+  listDiv.style.top = menu_top;
+  listDiv.style.left = menu_left;
+  if (scroll==0) {listDiv.style.overflow="visible";listDiv.style.width=tWidth}
+  else {listDiv.style.overflow="scroll";listDiv.style.width=tWidth+18}
+  listDiv.style.visibility = "visible";
+  var cssopaction=submenu.filters[0].opacity
+  submenu.filters[0].opacity=0;
+  submenu.filters[1].Apply();
+  submenu.filters[0].opacity=100;
+  submenu.filters[1].Play();
+  isvisible = true;
+  }
+function menuitem(lightcolor,normalcolor,icon,title,url)
+  {
+  this.lightcolor=lightcolor
+  this.normalcolor=normalcolor
+  this.icon=icon
+  this.title=title
+  this.url=url
+  }
+function bulidmenu(arrayname)
+  {
+  var menuarray=eval(arrayname)
+  menucontent='<table border="0" width="100%">'
+  for (i=0;i<menuarray.length;i++)
+  {
+  if (menuarray[i].title!="_line")
+  {
+  if (menuarray[i].url!="_disable"){css="getitem"}else{css="lostitem"}
+  if (menuarray[i].icon.length==0)
+  {
+  content='<table cellspacing="0" cellpadding="0"><tr><td style="text-indent:4px" class="'+css+'">'+menuarray[i].title+'</td></tr></table>'
+  }
+  else
+  {
+  content='<table cellspacing="0" cellpadding="0"><tr><td width="20" nowrap><img src="'+menuarray[i].icon+'"></td><td class="'+css+'">'+menuarray[i].title+'</td></tr></table>'
+  }
+  if (menuarray[i].url!="_disable"){
+  menucontent=menucontent+'<tr><td height=16 style="cursor:default" onmouseover="style.backgroundColor=\''+ menuarray[i].lightcolor+'\'" onmouseout="style.backgroundColor=\''+ menuarray[i].normalcolor+'\'" onclick="Golist(\''+menuarray[i].title+'\')">'+content+'</td></tr>'
+  }
+  else
+  {
+  menucontent=menucontent+'<tr><td height=16 style="fitler:gray">'+content+'</td></tr>'
+  }
+  }
+  else
+  {
+  menucontent=menucontent+'<tr><td height=4><img src="images/dock.gif" width="99%" height=1></td></tr>'
+  }
+  }//欢迎来到站长特效网，我们的网址是www.zzjs.n et，很好记，zz站长，js就是js特效，本站收集大量高质量js代码，还有许多广告代码下载。
+  menucontent=menucontent+"</table>"
+  return menucontent
+  }
+  function HL_Menu(obj,state)
+  {
+  switch (state)
+  {
+  case 0:
+  obj.className="menuover"
+  break;
+  case 1:
+  obj.className="menuup"
+  break;
+  }
+  }
+  
+ 
+  function Golist(text)
+  {
+  listvalue=eval(lb[listnum].valuename)
+  listvalue.innerText=text
+  vDiv = document.all("listDiv");
+  vDiv.style.visibility = "hidden";
+  isvisible = false;
+  } 
+</script>
+
+
+
+<table  border="0" cellspacing="0" cellpadding="0" height="44" >
+     <tr>
+    <td></td>
+    <td width="5"></td>
+    <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+
+    </td>
+  <tr>
+ <td height="44">
+   <table border="1" width="100" id="table32" cellspacing="0" cellpadding="4" bgcolor="#F7F7F7" style="border-collapse: collapse">
+  <tr>
+    <td height="34" class="menubar">
+   <table border="0" width="100%" id="table33" cellspacing="0" cellpadding="0">
+     <tr>
+
+    <td width="4" nowrap></td>
+
+    <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('`not`')"><b>¬</b></td>
+     </tr>
+      </table>
+      
+    </td>
+    <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('AA')"><b>∀</b></td>
+     </tr>
+      </table>
+      
+    </td>
+    <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('EE')"><b>∃</b></td>
+     </tr>
+      </table>
+      
+    </td>
+    <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('`in`')"><b>∈</b></td>
+     </tr>
+      </table>
+      
+    </td>
+     <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('<=>')"><b>⇔</b></td>
+     </tr>
+      </table>
+      
+    </td>
+     <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('=>')"><b>=></b></td>
+     </tr>
+      </table>
+      
+    </td>
+         <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('`or`')"><b>∨</b></td>
+     </tr>
+      </table>
+      
+    </td>
+    
+         <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('`and`')"><b>∧</b></td>
+     </tr>
+      </table>
+      
+    </td>
+     <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('=')"><b>=</b></td>
+     </tr>
+      </table>
+    </td>
+    <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('->')"><b><strong>-></strong></b></td>
+     </tr>
+      </table>
+    </td>
+    <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('<-')"><b><-</b></td>
+     </tr>
+      </table>
+    </td>
+    <td nowrap align="center" onmouseover="HL_Menu(this,0)" onmouseout="HL_Menu(this,1)" class="menuup">
+      <table cellspacing="0" cellpadding="0" id="table41" width="16">
+     <tr>
+       <td nowrap></td>
+       <td class="leftitem"  align=center onClick="insert('<->')"><b><strong><-></strong></b></td>
+     </tr>
+      </table>
+    </td>
+    
+    
+    <td width="100%" nowrap></td>
+     </tr>
+   </table>
+    </td>
+  </tr>
+   </table>
+ </td>
+  </tr>
+</table>

@@ -1,0 +1,24 @@
+<head> 
+ 
+	<meta charset="utf-8"> 
+ 
+	<title>Calendar | by Valeriu Timbuc for DesignModo</title> 
+ 
+	<link rel="stylesheet" href="calendar.css" media="screen"> 
+</head> 
+ 
+<body> 
+<div id="calendar"></div> 
+<script src="jquery.min.js"></script> 
+<script src="jquery-ui-datepicker.min.js"></script> 
+<script> 
+	$('#calendar').datepicker({
+		inline: true,
+		firstDay: 1,
+		showOtherMonths: true,
+		dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+	});
+</script> 
+</body> 
+ 
+</html>
